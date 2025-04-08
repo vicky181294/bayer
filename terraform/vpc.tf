@@ -83,7 +83,7 @@ resource "aws_lb" "app_lb" {
 }
 
 resource "aws_lb_target_group" "patient1" {
-  name        = "tg-patient"
+  name        = "tg-patient1"
   port        = var.container_port
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
@@ -91,7 +91,7 @@ resource "aws_lb_target_group" "patient1" {
 }
 
 resource "aws_lb_target_group" "appointment1" {
-  name        = "tg-appointment"
+  name        = "tg-appointment1"
   port        = var.container_port
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
