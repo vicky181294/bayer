@@ -6,6 +6,7 @@ on:
       - main  # Trigger when pushing to 'infra' branch
     paths:
       - 'terraform/**' # Only trigger if Terraform files are modified
+  workflow_dispatch:
 
 jobs:
   deploy:
