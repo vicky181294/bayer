@@ -28,7 +28,7 @@ resource "aws_ecs_service" "patient" {
     assign_public_ip = true
   }
   load_balancer {
-    target_group_arn = aws_lb_target_group.patient.arn
+    target_group_arn = aws_lb_target_group.patient1.arn
     container_name   = "${var.env}-${var.domain}-patient"
     container_port   = var.container_port
   }

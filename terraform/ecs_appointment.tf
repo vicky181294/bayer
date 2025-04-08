@@ -28,7 +28,7 @@ resource "aws_ecs_service" "appointment" {
     assign_public_ip = true
   }
   load_balancer {
-    target_group_arn = aws_lb_target_group.appointment.arn
+    target_group_arn = aws_lb_target_group.appointment1.arn
     container_name   = "${var.env}-${var.domain}-appointment"
     container_port   = var.container_port
   }
