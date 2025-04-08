@@ -75,7 +75,7 @@ resource "aws_security_group" "ecs_sg" {
 }
 
 resource "aws_lb" "app_lb1" {
-  name               = "${var.env}-${var.domain}-${var.app_name}-lb"
+  name               = "${var.env}-${var.domain}-${var.app_name}-lb1"
   internal           = false
   load_balancer_type = "application"
   subnets            = [aws_subnet.public_sub_1.id, aws_subnet.public_sub_2.id]
