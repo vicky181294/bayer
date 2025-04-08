@@ -36,6 +36,7 @@ jobs:
 
       - name: Deploy ECS Infrastructure with Terraform
         run: |
+          cd terraform
           terraform init -backend-config=backend-dev.hcl
           terraform plan -var-file="terraform/dev.tfvars"
           terraform apply -var-file="terraform/dev.tfvars" -auto-approve
