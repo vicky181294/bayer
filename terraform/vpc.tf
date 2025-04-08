@@ -16,7 +16,7 @@ resource "aws_subnet" "public_sub_2" {
   # count                   = 1
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.pub_subnet_2
-  availability_zone       = "us-east-1a"
+  availability_zone       = "us-east-1b"
   map_public_ip_on_launch = true
 }
 
@@ -140,7 +140,7 @@ resource "aws_lb_listener_rule" "appointment_rule" {
 
 
 resource "aws_iam_role" "ecs_task_execution" {
-  name = "ecsTaskExecutionRole"
+  name = "ecsTaskExecutionRole-ecs"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
