@@ -3,12 +3,10 @@ name: Build and Push Docker Images to ECR
 on:
   push:
     branches:
-      - main
-      - docker-build # Trigger when pushing to 'docker-build' branch
+      - main # Trigger when pushing to 'docker-build' branch
     paths:
-      - 'application/**'
-      - 'Dockerfile.patient'
-      - 'Dockerfile.appointment'
+       - 'application/appointment/**'
+       - 'application/patient/**' #only trigger if files under these folders modified
 
 jobs:
   build_and_push:
@@ -17,8 +15,8 @@ jobs:
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       ACCOUNT_ID: ${{ secrets.ECR_ACCOUNT_ID }}
-      PATIENT_REPO: patient-service
-      APPOINTMENT_REPO: appointment-service
+      PATIENT_REPO: dev/bayer/patient
+      APPOINTMENT_REPO: dev/bayer/appointment #name of the ecr repo
 
     steps:
       - name: Checkout code

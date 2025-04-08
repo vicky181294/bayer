@@ -3,8 +3,7 @@ name: Deploy AWS Infrastructure and ECS Services
 on:
   push:
     branches:
-      - main
-      - infra  # Trigger when pushing to 'infra' branch
+      - main  # Trigger when pushing to 'infra' branch
     paths:
       - 'terraform/**' # Only trigger if Terraform files are modified
 
@@ -15,10 +14,8 @@ jobs:
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       ACCOUNT_ID: ${{ secrets.ECR_ACCOUNT_ID }}
-      PATIENT_REPO: patient-service
-      APPOINTMENT_REPO: appointment-service
-      VPC_ID: ${{ secrets.VPC_ID }}
-      SUBNET_IDS: ${{ secrets.SUBNET_IDS }}
+      PATIENT_REPO: dev/bayer/patient
+      APPOINTMENT_REPO: dev/bayer/appointment
 
     steps:
       - name: Checkout code
@@ -33,5 +30,6 @@ jobs:
 
       - name: Deploy ECS Infrastructure with Terraform
         run: |
-          terraform init
-          terraform apply -var="vpc_id=$VPC_ID" -var="subnet_ids=$SUBNET_IDS" -auto-approve
+          terraform init -backend-config=backend-dev.hcl
+          terraform plan -var-file="dev.tfvars"
+          terraform apply -var-file="dev.tfvars" -auto-approve
