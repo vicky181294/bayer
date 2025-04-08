@@ -2,10 +2,10 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-COPY ./application/appointment/package.json .
+COPY package.json .
 RUN npm install -y
 
-COPY ./application/appointment/ .
+COPY . .
 
 EXPOSE 3000
 

@@ -3,10 +3,10 @@ FROM node:18-alpine
 #wkr dir
 WORKDIR /app
 
-COPY application/patient/package.json .
+COPY package.json .
 RUN npm install -y
 
-COPY application/patient/ .
+COPY . .
 
 EXPOSE 3000
 
