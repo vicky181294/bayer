@@ -3,7 +3,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 COPY application/appointment/package.json ./
-RUN npm install
+RUN npm install -y
 
 COPY application/appointment/ .
 
