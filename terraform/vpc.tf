@@ -124,7 +124,7 @@ resource "aws_lb_listener_rule" "patient_rule" {
 
   condition {
     path_pattern {
-      values = ["/patient*"]
+      values = ["/patients*"]
     }
   }
 }
