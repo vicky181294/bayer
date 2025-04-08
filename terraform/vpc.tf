@@ -3,13 +3,13 @@ provider "aws" {
 }
 
 resource "aws_vpc" "main" {
-  cidr_block = var.vpc_cidr
-  enable_dns_support = true
+  cidr_block           = var.vpc_cidr
+  enable_dns_support   = true
   enable_dns_hostnames = true
 }
 
 resource "aws_subnet" "public_sub_1" {
-  count                   = 1
+  # count                   = 1
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.pub_subnet_1
   availability_zone       = "us-east-1a"
@@ -17,7 +17,7 @@ resource "aws_subnet" "public_sub_1" {
 }
 
 resource "aws_subnet" "public_sub_2" {
-  count                   = 1
+  # count                   = 1
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.pub_subnet_2
   availability_zone       = "us-east-1a"
@@ -72,26 +72,26 @@ resource "aws_security_group" "ecs_sg" {
 }
 
 resource "aws_lb" "app_lb" {
-  name               = "${env}-${domain}-${var.app_name}-lb"
+  name               = "${var.env}-${var.domain}-${var.app_name}-lb"
   internal           = false
   load_balancer_type = "application"
-  subnets            = [aws_subnet.public_sub_1.id , aws_subnet.public_sub_2.id]
+  subnets            = [aws_subnet.public_sub_1.id, aws_subnet.public_sub_2.id]
   security_groups    = [aws_security_group.ecs_sg.id]
 }
 
 resource "aws_lb_target_group" "patient" {
-  name     = "tg-patient"
-  port     = var.container_port
-  protocol = "HTTP"
-  vpc_id   = aws_vpc.main.id
+  name        = "tg-patient"
+  port        = var.container_port
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.main.id
   target_type = "ip"
 }
 
 resource "aws_lb_target_group" "appointment" {
-  name     = "tg-appointment"
-  port     = var.container_port
-  protocol = "HTTP"
-  vpc_id   = aws_vpc.main.id
+  name        = "tg-appointment"
+  port        = var.container_port
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.main.id
   target_type = "ip"
 }
 
@@ -101,7 +101,7 @@ resource "aws_lb_listener" "http" {
   protocol          = "HTTP"
 
   default_action {
-    type             = "fixed-response"
+    type = "fixed-response"
     fixed_response {
       content_type = "text/plain"
       status_code  = "404"

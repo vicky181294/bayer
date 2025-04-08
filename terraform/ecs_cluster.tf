@@ -5,7 +5,7 @@ resource "aws_ecs_cluster" "ecs_cluster" {
 }
 
 resource "aws_ecr_repository" "ecr_patient" {
-  name                 = "${var.env}/${var.domain}/patient" 
+  name = "${var.env}/${var.domain}/patient"
 
   image_tag_mutability = "MUTABLE"
 
@@ -17,7 +17,7 @@ resource "aws_ecr_repository" "ecr_patient" {
 }
 
 resource "aws_ecr_repository" "ecr_appointment" {
-  name                 = "${var.env}/${var.domain}/appointment" 
+  name = "${var.env}/${var.domain}/appointment"
 
   image_tag_mutability = "MUTABLE"
 

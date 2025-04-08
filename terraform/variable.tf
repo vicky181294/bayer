@@ -1,9 +1,9 @@
 variable "region" {
-  type    = string
+  type = string
 }
 
 variable "vpc_cidr" {
-  type    = string
+  type = string
 }
 
 variable "subnet_cidrs" {
@@ -19,24 +19,24 @@ variable "container_port" {
 }
 
 variable "pub_subnet_1" {
-    type = string
+  type = string
 }
 
 variable "pub_subnet_2" {
-    type = string
+  type = string
 }
 
 variable "env" {
-    type = string
+  type = string
 }
 
 variable "domain" {
-    type = string
+  type = string
 }
 
 variable "log_group_name" {
-    type = string
-  
+  type = string
+
 }
 
 
@@ -65,11 +65,11 @@ variable "default_tags" {
     ResourceRequestID         = ""
     Retention                 = ""
     RotateImage               = ""
-    ScannablePorts           = ""
-    TechnicalOwner           = ""
+    ScannablePorts            = ""
+    TechnicalOwner            = ""
     Template                  = ""
-    TemplateURL              = ""
-    Terraform                = true
+    TemplateURL               = ""
+    Terraform                 = true
   }
   description = "Default tags for AWS resources"
 }
