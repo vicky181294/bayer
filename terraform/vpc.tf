@@ -74,7 +74,7 @@ resource "aws_security_group" "ecs_sg" {
   }
 }
 
-resource "aws_lb" "app_lb" {
+resource "aws_lb" "app_lb1" {
   name               = "${var.env}-${var.domain}-${var.app_name}-lb"
   internal           = false
   load_balancer_type = "application"
@@ -99,7 +99,7 @@ resource "aws_lb_target_group" "appointment1" {
 }
 
 resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.app_lb.arn
+  load_balancer_arn = aws_lb.app_lb1.arn
   port              = 80
   protocol          = "HTTP"
 
