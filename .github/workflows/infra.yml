@@ -38,5 +38,6 @@ jobs:
         run: |
           cd terraform
           terraform init -backend-config=backend-dev.hcl
-          terraform plan -var-file="dev.tfvars"
-          terraform apply -var-file="dev.tfvars" -auto-approve
+          terraform destroy -var-file="dev.tfvars" -auto-approve
+          # terraform plan -var-file="dev.tfvars"
+          # terraform apply -var-file="dev.tfvars" -auto-approve
