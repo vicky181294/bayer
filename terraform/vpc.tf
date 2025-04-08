@@ -82,21 +82,21 @@ resource "aws_lb" "app_lb" {
   security_groups    = [aws_security_group.ecs_sg.id]
 }
 
-# resource "aws_lb_target_group" "patient" {
-#   name        = "tg-patient"
-#   port        = var.container_port
-#   protocol    = "HTTP"
-#   vpc_id      = aws_vpc.main.id
-#   target_type = "ip"
-# }
+resource "aws_lb_target_group" "patient1" {
+  name        = "tg-patient"
+  port        = var.container_port
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.main.id
+  target_type = "ip"
+}
 
-# resource "aws_lb_target_group" "appointment" {
-#   name        = "tg-appointment"
-#   port        = var.container_port
-#   protocol    = "HTTP"
-#   vpc_id      = aws_vpc.main.id
-#   target_type = "ip"
-# }
+resource "aws_lb_target_group" "appointment1" {
+  name        = "tg-appointment"
+  port        = var.container_port
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.main.id
+  target_type = "ip"
+}
 
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.app_lb.arn
@@ -119,7 +119,7 @@ resource "aws_lb_listener_rule" "patient_rule" {
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.patient.arn
+    target_group_arn = aws_lb_target_group.patient1.arn
   }
 
   condition {
@@ -135,7 +135,7 @@ resource "aws_lb_listener_rule" "appointment_rule" {
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.appointment.arn
+    target_group_arn = aws_lb_target_group.appointment1.arn
   }
 
   condition {
