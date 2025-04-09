@@ -108,7 +108,7 @@ resource "aws_lb_listener" "http" {
     fixed_response {
       content_type = "text/plain"
       status_code  = "404"
-      message_body = "Page not found"
+      message_body = "Hi Vignesh"
     }
   }
 }
@@ -140,7 +140,7 @@ resource "aws_lb_listener_rule" "appointment_rule" {
 
   condition {
     path_pattern {
-      values = ["/appointment*"]
+      values = ["/appointments*"]
     }
   }
 }
