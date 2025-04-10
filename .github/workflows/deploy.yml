@@ -1,13 +1,63 @@
+# name: Build and Push Docker Images to ECR
+
+# on:
+#   push:
+#     branches:
+#       - main # Trigger when pushing to 'docker-build' branch
+#     paths:
+#        - 'application/appointment/**'
+#        - 'application/patient/**' #only trigger if files under these folders modified
+#   workflow_dispatch:
+
+# jobs:
+#   build_and_push:
+#     runs-on: ubuntu-latest
+
+#     env:
+#       AWS_REGION: ${{ secrets.AWS_REGION }}
+#       ACCOUNT_ID: ${{ secrets.ECR_ACCOUNT_ID }}
+#       PATIENT_REPO: dev/bayer/patient
+#       APPOINTMENT_REPO: dev/bayer/appointment #name of the ecr repo
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v2
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ${{ secrets.AWS_REGION }}
+
+#       - name: Login to Amazon ECR
+#         run: |
+#           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+
+#       - name: Build and Push Patient Image
+#         working-directory: ./application/patient
+#         run: |
+#           docker build -t $PATIENT_REPO .
+#           docker tag $PATIENT_REPO:latest $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PATIENT_REPO:latest
+#           docker push $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PATIENT_REPO:latest
+
+#       - name: Build and Push Appointment Image
+#         working-directory: ./application/appointment
+#         run: |
+#           docker build -t $APPOINTMENT_REPO .
+#           docker tag $APPOINTMENT_REPO:latest $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$APPOINTMENT_REPO:latest
+#           docker push $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$APPOINTMENT_REPO:latest
+
 name: Build and Push Docker Images to ECR
 
 on:
   push:
     branches:
-      - main # Trigger when pushing to 'docker-build' branch
+      - main  # Trigger when pushing to 'main' branch
     paths:
-       - 'application/appointment/**'
-       - 'application/patient/**' #only trigger if files under these folders modified
-  workflow_dispatch:
+      - 'application/appointment/**'
+      - 'application/patient/**' # Trigger only if files under these folders are modified
+  workflow_dispatch: # Allow manual triggers
 
 jobs:
   build_and_push:
@@ -17,7 +67,7 @@ jobs:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       ACCOUNT_ID: ${{ secrets.ECR_ACCOUNT_ID }}
       PATIENT_REPO: dev/bayer/patient
-      APPOINTMENT_REPO: dev/bayer/appointment #name of the ecr repo
+      APPOINTMENT_REPO: dev/bayer/appointment # Name of the ECR repos
 
     steps:
       - name: Checkout code
@@ -37,6 +87,8 @@ jobs:
       - name: Build and Push Patient Image
         working-directory: ./application/patient
         run: |
+          # Ensure dependencies like 'express' are installed before building
+          npm install
           docker build -t $PATIENT_REPO .
           docker tag $PATIENT_REPO:latest $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PATIENT_REPO:latest
           docker push $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$PATIENT_REPO:latest
@@ -44,6 +96,9 @@ jobs:
       - name: Build and Push Appointment Image
         working-directory: ./application/appointment
         run: |
+          # Ensure dependencies like 'express' are installed before building
+          npm install
           docker build -t $APPOINTMENT_REPO .
           docker tag $APPOINTMENT_REPO:latest $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$APPOINTMENT_REPO:latest
           docker push $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$APPOINTMENT_REPO:latest
+
