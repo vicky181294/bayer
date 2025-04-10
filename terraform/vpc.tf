@@ -88,6 +88,17 @@ resource "aws_lb_target_group" "patient1" {
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
+
+  health_check {
+    path                = "/patients"   # 👈 your service must respond to this
+    protocol            = "HTTP"
+    matcher             = "200"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+  }
+
 }
 
 resource "aws_lb_target_group" "appointment1" {
@@ -96,6 +107,17 @@ resource "aws_lb_target_group" "appointment1" {
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
+
+  health_check {
+    path                = "/appointments"   # 👈 your service must respond to this
+    protocol            = "HTTP"
+    matcher             = "200"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+  }
+
 }
 
 resource "aws_lb_listener" "http" {
