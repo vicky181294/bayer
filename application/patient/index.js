@@ -16,7 +16,7 @@ const express = require('express');
     
     app.get('/patients', (req, res) => {
       res.json({ 
-        message: 'Patients retrieved successfully',
+        message: 'Patients retrieved successfully by vicky',
         count: patients.length,
         patients: patients 
       });
